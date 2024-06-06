@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sound Reaction Test</title>
+
+<!-- ========== Start Stylesheet ========== -->
+<link rel="stylesheet" href="../css/reactions_css/math_test.css">
+<link rel="stylesheet" href="../css/stylesheet.css">
+<link rel="stylesheet" href="../css/LogInPage/logInStyle.css">
+<link rel="stylesheet" href="../css/navigation.css">
+<style>a{text-decoration: none;}</style>
+<!-- ========== End Stylesheet ========== -->
+
+</head>
+<body>
+
+    <!--Header ============================================= -->
+    <header>
+        <!-- Start Navigation -->
+        <nav class="navigation">
+            <div class="container">
+                <!-- Start Attribute Navigation -->
+                <a href="/html/login.html">
+                    <button class="sign_up_button">ВОЙТИ</button>
+                </a>
+                <!-- End Attribute Navigation -->
+                <!-- Start collection in nav -->
+                <div class="navbar">
+                    <ul class="navbar_menu">
+                        <li><a class="navbar_item" href="/html/main.html">Главная</a></li>
+                        <li><a class="navbar_item" href="/html/pvk.html">ПВК</a></li>
+                        <li><a class="navbar_item" href="#">Тесты</a></li>
+                    </ul>
+                </div>
+                <!-- выдает ошибку во флоат? -->
+                <img class="Logo" src="../image/logoITMO.png" alt="itmo_logo" width="100px" float: left>
+            </div>
+        </nav>
+        <!-- End Navigation -->
+    </header>
+    <!-- End Header -->
+
+<button id="startButton">Start Test</button>
+<audio id="sound" src="sound/1-door-bell.mp3"></audio>
+
+<script>
+    var startTime;
+    var reactionTime;
+    var soundPlayed = false;
+
+    document.getElementById('startButton').addEventListener('click', function() {
+        this.disabled = true; // Отключить кнопку после запуска
+        // Задержка перед воспроизведением звука
+        var delay = Math.random() * 2000 + 1000; // 1-3 секунды
+        setTimeout(playSound, delay);
+    });
+
+    document.body.addEventListener('click', function() {
+        if (soundPlayed) {
+            checkReaction();
+        }
+    });
+
+    function playSound() {
+        document.getElementById('sound').play();
+        startTime = new Date().getTime();
+        soundPlayed = true;
+    }
+
+    function checkReaction() {
+        if (!startTime) return; // Игнорируем, если звук ещё не воспроизведён
+        reactionTime = new Date().getTime() - startTime;
+        alert("Your reaction time: " + reactionTime + " milliseconds");
+        soundPlayed = false;
+        document.getElementById('startButton').disabled = false; // Включить кнопку после завершения теста
+    }
+</script>
+
+</body>
+</html>
